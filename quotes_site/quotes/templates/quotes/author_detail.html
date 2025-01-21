@@ -1,0 +1,10 @@
+<h2>{{ author.fullname }}</h2>
+<p><strong>Born:</strong> {{ author.born_date }} in {{ author.born_location }}</p>
+<p>{{ author.description }}</p>
+<h3>Quotes:</h3>
+<ul>
+    {% for quote in quotes %}
+        <li>"{{ quote.text }}"</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'quotes:authors_list' %}">Back to authors</a>

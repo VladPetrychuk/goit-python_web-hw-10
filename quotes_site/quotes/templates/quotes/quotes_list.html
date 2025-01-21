@@ -1,0 +1,7 @@
+<h2>Quotes</h2>
+<ul>
+    {% for quote in quotes %}
+        <li>"{{ quote.text }}" - <strong>{{ quote.author.fullname }}</strong></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'quotes:authors_list' %}">Back to authors</a>
