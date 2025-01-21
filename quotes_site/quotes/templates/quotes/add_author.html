@@ -1,0 +1,9 @@
+<h2>Add Author</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="fullname" placeholder="Full Name" required>
+    <input type="text" name="born_date" placeholder="Born Date">
+    <input type="text" name="born_location" placeholder="Born Location">
+    <textarea name="description" placeholder="Description"></textarea>
+    <button type="submit">Add Author</button>
+</form>
