@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
+from . import views
 
 urlpatterns = [
     # Вхід користувача
     path('login/', LoginView.as_view(template_name='quotes/login.html'), name='login'),
     # Вихід користувача
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('authors/', views.authors_list, name='authors_list'),  # Список авторів
+    path('authors/<int:author_id>/', views.author_detail, name='author_detail'),  # Деталі автора
+    path('quotes/', views.quotes_list, name='quotes_list'),  # Список цитат
 ]
