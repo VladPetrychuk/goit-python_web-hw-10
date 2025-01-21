@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from quotes.models import Author, Quote
 
+def index(request):
+    return render(request, 'index.html')
+
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
