@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
-from .models_mongo import Author
-from .models_mongo import Quote
+from django.shortcuts import render, get_object_or_404
+from quotes.models import Author, Quote
 
 def register(request):
     if request.method == 'POST':
@@ -56,3 +56,16 @@ def add_quote(request):
 
     authors = Author.objects.all()  # Виводимо авторів для вибору
     return render(request, 'quotes/add_quote.html', {'authors': authors})
+
+def authors_list(request):
+    authors = Author.objects.all()
+    return render(request, 'quotes/authors_list.html', {'authors': authors})
+
+def author_detail(request, author_id):
+    author = get_object_or_404(Author, id=author_id)
+    quotes = author.quotes.all()  # Всі цитати автора
+    return render(request, 'quotes/author_detail.html', {'author': author, 'quotes': quotes})
+
+def quotes_list(request):
+    quotes = Quote.objects.all()
+    return render(request, 'quotes/quotes_list.html', {'quotes': quotes})
