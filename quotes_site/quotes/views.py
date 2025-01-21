@@ -3,6 +3,7 @@ from django.contrib.auth import login
 from .forms import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from .models_mongo import Author
+from .models_mongo import Quote
 
 def register(request):
     if request.method == 'POST':
@@ -34,3 +35,24 @@ def add_author(request):
         return redirect('quotes:author_list')  # Переходимо до списку авторів
 
     return render(request, 'quotes/add_author.html')  # Виводимо форму
+
+@login_required
+def add_quote(request):
+    if request.method == 'POST':  # Користувач надіслав дані
+        text = request.POST.get('quote')
+        tags = request.POST.get('tags').split(',')  # Теги через кому
+        author_id = request.POST.get('author_id')  # ID автора
+
+        author = Author.objects.get(id=author_id)  # Знаходимо автора
+
+        # Створюємо цитату
+        quote = Quote(
+            quote=text,
+            tags=tags,
+            author=author
+        )
+        quote.save()  # Зберігаємо в MongoDB
+        return redirect('quotes:quotes_list')  # Переходимо до списку цитат
+
+    authors = Author.objects.all()  # Виводимо авторів для вибору
+    return render(request, 'quotes/add_quote.html', {'authors': authors})
